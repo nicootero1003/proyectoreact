@@ -14,6 +14,8 @@ const App = () => {
   const [correo, cambiarCorreo] = useState({campo:"", valido: null});
   const [telefono, cambiarTelefono] = useState({campo:"", valido: null});
   const [terminos, cambiarTerminos] = useState(false);
+  const [formularioValido, cambiarFormularioValido] = useState(null);
+
   const expresiones = {
     usuario: /^[a-zA-Z0-9]{4,16}$/, // Letras, numeros, guion y guion_bajo
     nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
@@ -39,9 +41,33 @@ const App = () => {
       cambiarTerminos(e.target.checked)
   };
 
+  const onSubmit= (e) => {
+    e.preventDefault();
+
+    if(
+      usuario.valido === 'true' &&
+       nombre.valido === 'true' &&
+       password.valido === 'true' &&
+       password2.valido === 'true' &&
+       correo.valido === 'true' &&
+       telefono.valido === 'true' &&
+       terminos
+       ){
+        cambiarFormularioValido(true);
+        cambiarUsuario({campo: '', valido: ''})
+        cambiarNombre({campo: '', valido: ''})
+        cambiarPassword({campo: '', valido: ''})
+        cambiarPassword2({campo: '', valido: ''})
+        cambiarCorreo({campo: '', valido: ''})
+        cambiarTelefono({campo: '', valido: ''})
+    } else {
+      cambiarFormularioValido(false)
+    }
+
+  }
   return ( 
     <main>
-      <Formulario action ="">
+      <Formulario action ="" onSubmit={onSubmit}>
         <InputComponent 
           estado={usuario}
           cambiarEstado={cambiarUsuario}
@@ -123,7 +149,7 @@ const App = () => {
             Acepto los terminos y condiciones
           </Label>
         </Conditions>
-        {false && <ErrorMessege>
+        {formularioValido === false && <ErrorMessege>
           <p>
             <FontAwesomeIcon icon={faExclamationTriangle}> </FontAwesomeIcon>
             <b>Error:</b> Por favor rellene el formulario correctamente.
@@ -131,7 +157,7 @@ const App = () => {
         </ErrorMessege>}
         <CenterButton>
           <Button type='submit'>Enviar</Button>
-          <SuccesMessege>Formulario enviado exitosamente!</SuccesMessege>
+          {formularioValido === true && <SuccesMessege>Formulario enviado exitosamente!</SuccesMessege>}
         </CenterButton>
 
       </Formulario>

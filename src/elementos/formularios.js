@@ -72,6 +72,7 @@ const ErrorLegend = styled.p`
     ${props => props.valido === 'false' && css`
         display: block;
     `}
+
 `;
 
 const ValidationIcon = styled(FontAwesomeIcon)` 
@@ -97,6 +98,9 @@ const Conditions = styled.div`
     input{
         margin-right: 10px;
     }
+    @media(max-width: 800px){
+        grid-column: span 1;
+    }
 `;
 
 const CenterButton = styled.div`
@@ -104,6 +108,10 @@ const CenterButton = styled.div`
     flex-direction: column;
     align-items: center;
     grid-column: span 2;
+
+    @media(max-width: 800px){
+        grid-column: span 1;
+    }
 `;
 
 const Button = styled.button`
@@ -125,7 +133,7 @@ const Button = styled.button`
 const SuccesMessege = styled.p`
     font-siza: 14px;
     color: ${colores.exito};
-    display: none;
+    display: block;
 
 `;
 
